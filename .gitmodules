@@ -1,0 +1,3 @@
+[submodule "Il2CppDumper"]
+	path = Il2CppDumper
+	url = git@github.com:Perfare/Il2CppDumper.git
