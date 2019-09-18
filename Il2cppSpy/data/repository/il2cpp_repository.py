@@ -8,7 +8,7 @@ from Il2cppSpy.domain.repository.abstract_assembly_repository import AbstractAss
 from Il2cppSpy.utils.file_utils import strings
 
 import clr
-sys.path.append('../DumpWrapper/DumpWrapper/bin/Release')
+sys.path.append('./bin/Release')
 clr.AddReference('DumpWrapper')
 import Wrapper
 from Wrapper import DumpWrapper
@@ -23,7 +23,7 @@ class Il2cppRepository(AbstractIl2cppRepository):
         return self.to_model(result, out_apk_dir, progress)
 
     def config_path(self) -> str:
-        return "../Il2CppDumper/Il2CppDumper/config.json"
+        return "./bin/Release/config.json"
 
     def metadata_path(self, out_apk_dir: str) -> str:
         return f'{out_apk_dir}/assets/bin/Data/Managed/Metadata/global-metadata.dat'
