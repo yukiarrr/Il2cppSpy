@@ -12,17 +12,19 @@ namespace Wrapper
 {
     public static class DumpWrapper
     {
+        private const string CONFIG_JSON = "{\"DumpMethod\":true,\"DumpField\":true,\"DumpProperty\":true,\"DumpAttribute\":true,\"DumpFieldOffset\":true,\"DumpMethodOffset\":true,\"DumpTypeDefIndex\":true,\"DummyDll\":true,\"MakeFunction\":true,\"ForceIl2CppVersion\":false,\"ForceVersion\":16}";
+
         private static Metadata metadata;
         private static Il2Cpp il2cpp;
         private static Config config;
         private static Dictionary<Il2CppMethodDefinition, string> methodModifiers = new Dictionary<Il2CppMethodDefinition, string>();
         private static Dictionary<Il2CppTypeDefinition, int> typeDefImageIndices = new Dictionary<Il2CppTypeDefinition, int>();
 
-        public static DumpType[] Dump(string configPath, string metadataPath, string il2cppPath, string stringVersion)
+        public static DumpType[] Dump(string metadataPath, string il2cppPath, string stringVersion)
         {
             // From Program.cs
 
-            config = new JavaScriptSerializer().Deserialize<Config>(File.ReadAllText(configPath));
+            config = new JavaScriptSerializer().Deserialize<Config>(CONFIG_JSON);
 
             var metadataBytes = File.ReadAllBytes(metadataPath);
             var il2cppBytes = File.ReadAllBytes(il2cppPath);

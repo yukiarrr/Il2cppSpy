@@ -19,11 +19,8 @@ class Il2cppRepository(AbstractIl2cppRepository):
         self.assembly_repository = assembly_repository
 
     def dump(self, out_apk_dir: str, progress: Callable[[float], None]) -> List[DumpType]:
-        result = DumpWrapper.Dump(self.config_path(), self.metadata_path(out_apk_dir), self.il2cpp_path(out_apk_dir), self.unity_version(out_apk_dir))
+        result = DumpWrapper.Dump(self.metadata_path(out_apk_dir), self.il2cpp_path(out_apk_dir), self.unity_version(out_apk_dir))
         return self.to_model(result, out_apk_dir, progress)
-
-    def config_path(self) -> str:
-        return "./bin/Release/config.json"
 
     def metadata_path(self, out_apk_dir: str) -> str:
         return f'{out_apk_dir}/assets/bin/Data/Managed/Metadata/global-metadata.dat'
