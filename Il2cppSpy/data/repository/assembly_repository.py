@@ -1,4 +1,7 @@
+import os
 from typing import List
+# For pyinstaller
+os.environ['LIBCAPSTONE_PATH'] = '.'
 from capstone import Cs, CS_ARCH_ARM, CS_MODE_ARM
 
 from Il2cppSpy.domain.repository.abstract_assembly_repository import AbstractAssemblyRepository
