@@ -15,10 +15,11 @@ if distutils.distutils_path.endswith('__init__.py'):
 block_cipher = None
 
 
+import os
 import capstone
 
 
-site_package_path = '/'.join(capstone.__file__.split('/')[:-2])
+site_package_path = '/'.join(capstone.__file__.split(os.sep)[:-2])
 
 a = Analysis(['../Il2cppSpy/application.py'],
              pathex=['../Il2cppSpy/scripts'],
