@@ -23,24 +23,28 @@ class MainWindow(QMainWindow):
         ui.actionCompareFiles.triggered.connect(self.action_compare_files)
 
     def action_open_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, 'Open Apk', '', 'Apk(*.apk)')
+        file_path, _ = QFileDialog.getOpenFileName(self, 'Open Apk', filter='Apk(*.apk)', options=QFileDialog.DontUseNativeDialog)
         if not file_path:
             return
         progress_dialog = QProgressDialog('Open Apk...', '', 0, 100, self)
         progress_dialog.setCancelButton(None)
         progress_dialog.setWindowModality(Qt.WindowModal)
+        progress_dialog.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint)
+        progress_dialog.show()
         self.action_presenter.open_file(file_path, lambda value: progress_dialog.setValue(value * 100))
 
     def action_compare_files(self):
-        before_file_path, _ = QFileDialog.getOpenFileName(self, 'Open Before Apk', '', 'Apk(*.apk)')
+        before_file_path, _ = QFileDialog.getOpenFileName(self, 'Open Before Apk', filter='Apk(*.apk)', options=QFileDialog.DontUseNativeDialog)
         if not before_file_path:
             return
-        after_file_path, _ = QFileDialog.getOpenFileName(self, 'Open After Apk', '', 'Apk(*.apk)')
+        after_file_path, _ = QFileDialog.getOpenFileName(self, 'Open After Apk', filter='Apk(*.apk)', options=QFileDialog.DontUseNativeDialog)
         if not after_file_path:
             return
         progress_dialog = QProgressDialog('Compare Apks...', '', 0, 100, self)
         progress_dialog.setCancelButton(None)
         progress_dialog.setWindowModality(Qt.WindowModal)
+        progress_dialog.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint)
+        progress_dialog.show()
         self.action_presenter.compare_files(before_file_path, after_file_path, lambda value: progress_dialog.setValue(value * 100))
 
 
