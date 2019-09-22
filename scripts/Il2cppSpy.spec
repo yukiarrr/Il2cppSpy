@@ -16,15 +16,17 @@ block_cipher = None
 
 
 import os
+import platform
 import capstone
 
 
 site_package_path = '/'.join(capstone.__file__.split(os.sep)[:-2])
+icon_path = './icons/icon.icns' if platform.system() == 'Darwin' else './icons/icon.ico'
 
 a = Analysis(['../Il2cppSpy/application.py'],
              pathex=['../Il2cppSpy/scripts'],
              binaries=[],
-             datas=[('../Il2cppSpy/bin/Release/DumpWrapper.dll', '.'), ('../Il2cppSpy/bin/Release/Il2cppDumper.exe', '.'), ('../Il2cppSpy/bin/Release/Mono.Cecil.dll', '.'), (capstone._cs._name, './capstone/lib'), (f'{site_package_path}/Python.Runtime.dll', '.')],
+             datas=[('./icons/icon.ico', '.'), ('../Il2cppSpy/bin/Release/DumpWrapper.dll', '.'), ('../Il2cppSpy/bin/Release/Il2cppDumper.exe', '.'), ('../Il2cppSpy/bin/Release/Mono.Cecil.dll', '.'), (capstone._cs._name, './capstone/lib'), (f'{site_package_path}/Python.Runtime.dll', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -48,10 +50,10 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
+          console=False , icon=icon_path)
 app = BUNDLE(exe,
              name='Il2cppSpy.app',
-             icon=None,
+             icon=icon_path,
              bundle_identifier=None,
              info_plist={
                 'NSHighResolutionCapable': 'True'
