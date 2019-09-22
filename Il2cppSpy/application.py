@@ -1,7 +1,9 @@
 import sys
 sys.path.append('../')
 sys.path.append('./ui/')
+import os
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QProgressDialog
 import qdarkstyle
 
@@ -48,9 +50,16 @@ class MainWindow(QMainWindow):
         self.action_presenter.compare_files(before_file_path, after_file_path, lambda value: progress_dialog.setValue(value * 100))
 
 
+def resource_path(relative):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(relative)
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyside())
+    app.setWindowIcon(QIcon(resource_path('icon.ico')))
     window = MainWindow()
     window.show()
 
