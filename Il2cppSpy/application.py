@@ -4,7 +4,7 @@ sys.path.append('./ui/')
 import os
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QProgressDialog
+from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QProgressDialog, QDialog, QLabel, QHBoxLayout
 import qdarkstyle
 
 from Il2cppSpy.presentation.presenter.action_presenter import ActionPresenter
@@ -33,7 +33,11 @@ class MainWindow(QMainWindow):
         progress_dialog.setWindowModality(Qt.WindowModal)
         progress_dialog.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint)
         progress_dialog.show()
-        self.action_presenter.open_file(file_path, lambda value: progress_dialog.setValue(value * 100))
+        try:
+            self.action_presenter.open_file(file_path, lambda value: progress_dialog.setValue(value * 100))
+        except:  # noqa: E722
+            progress_dialog.close()
+            self.open_error_dialog()
 
     def action_compare_files(self):
         before_file_path, _ = QFileDialog.getOpenFileName(self, 'Open Before Apk', filter='Apk(*.apk)', options=QFileDialog.DontUseNativeDialog)
@@ -47,7 +51,20 @@ class MainWindow(QMainWindow):
         progress_dialog.setWindowModality(Qt.WindowModal)
         progress_dialog.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.CustomizeWindowHint)
         progress_dialog.show()
-        self.action_presenter.compare_files(before_file_path, after_file_path, lambda value: progress_dialog.setValue(value * 100))
+        try:
+            self.action_presenter.compare_files(before_file_path, after_file_path, lambda value: progress_dialog.setValue(value * 100))
+        except:  # noqa: E722
+            progress_dialog.close()
+            self.open_error_dialog()
+
+    def open_error_dialog(self):
+        error_dialog = QDialog(self)
+        label = QLabel()
+        label.setText('Sorry...\nNot support this apk.')
+        layout = QHBoxLayout()
+        layout.addWidget(label)
+        error_dialog.setLayout(layout)
+        error_dialog.show()
 
 
 def resource_path(relative):
