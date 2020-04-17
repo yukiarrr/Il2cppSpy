@@ -75,7 +75,7 @@ def resource_path(relative):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyside())
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyside2())
     app.setWindowIcon(QIcon(resource_path('icon.ico')))
     window = MainWindow()
     window.show()
